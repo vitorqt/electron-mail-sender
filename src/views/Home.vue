@@ -110,15 +110,19 @@ const { ipcRenderer } = window.require('electron')
 })
 export default class Home extends Vue {
   name = '';
-  email = '';
-  subject = '';
-  message = '';
+  address = ''
+  login = '';
+  password = '';
+  banda = '';
+  ip = '';
+  gateway = '';
+  dns = '';
   showConfig = false
 
   send () {
     swal({
-      title: 'Sending...',
-      text: 'Please wait',
+      title: 'Enviando...',
+      text: 'Aguarde',
       buttons: {
         cancel: false,
         confirm: false
@@ -129,17 +133,22 @@ export default class Home extends Vue {
 
     const response = ipcRenderer.sendSync('sendEmail', {
       name: this.name,
-      email: this.email,
-      subject: this.subject,
-      message: this.message
+      address: this.address,
+      login: this.login,
+      password: this.password,
+      banda: this.banda,
+      ip: this.ip,
+      gateway: this.gateway,
+      dns: this.dns
+
     })
 
     if (response === 'missing_transport') {
       swal('Oops!', 'The SMTP configs were not inserted.', 'error')
     } else if (response === 'success') {
-      swal('Success!', 'Email sent.', 'success')
+      swal('Successo!', 'Email enviado.', 'success')
     } else {
-      swal('Oops!', 'It was not possible to send the email.', 'error')
+      swal('Erro!', 'Não foi possível enviar.', 'error')
     }
   }
 }
