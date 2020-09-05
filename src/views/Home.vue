@@ -119,8 +119,8 @@ export default class Home extends Vue {
   dns = '';
   showConfig = false
 
-  send () {
-    swal({
+  async send () {
+    await swal({
       title: 'Enviando...',
       text: 'Aguarde',
       buttons: {
@@ -144,7 +144,7 @@ export default class Home extends Vue {
     })
 
     if (response === 'missing_transport') {
-      swal('Oops!', 'The SMTP configs were not inserted.', 'error')
+      swal('Erro!', 'As configurações SMTP não foram inseridas.', 'error')
     } else if (response === 'success') {
       swal('Successo!', 'Email enviado.', 'success')
     } else {

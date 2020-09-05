@@ -75,7 +75,8 @@ function createWindow () {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: true
-    }
+    },
+    icon: path.join(`${__static}/logo.png`)
   })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -181,7 +182,12 @@ ipcMain.on('sendEmail', async (event, arg: SendMailDto) => {
     html
   }
 
-  await transporter.sendMail(options)
+  try {
+    await transporter.sendMail(options)
+  } catch (err) {
+    event.returnValue = 'fail'
+    return
+  }
   event.returnValue = 'success'
 })
 
