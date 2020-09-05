@@ -144,7 +144,7 @@ export default class Home extends Vue {
     })
 
     if (response === 'missing_transport') {
-      swal('Oops!', 'The SMTP configs were not inserted.', 'error')
+      swal('Erro!', 'As configurações SMTP não foram inseridas.', 'error')
     } else if (response === 'success') {
       swal('Successo!', 'Email enviado.', 'success')
     } else {
