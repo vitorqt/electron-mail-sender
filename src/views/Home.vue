@@ -7,20 +7,23 @@
         </div>
 
         <form @submit.prevent="send" class="contact100-form validate-form">
+          <img src="~@/assets/images/logo-verde2.png">
           <span class="contact100-form-title">
-            Send email
+            Template E-mail
           </span>
 
+          <span class="title_section">Nome Empresa / Cliente</span>
           <div class="wrap-input100 validate-input">
-            <input class="input100" type="text" name="name" placeholder="Name" v-model="name" required>
+            <input class="input100" type="text" name="name" placeholder="Nome" v-model="name" required>
             <span class="focus-input100"></span>
             <span class="symbol-input100">
               <i class="fa fa-user" aria-hidden="true"></i>
             </span>
           </div>
-
+          <br>
+          <span class="title_section">Central do Assinante</span>
           <div class="wrap-input100 validate-input">
-            <input class="input100" type="email" name="email" placeholder="Email" v-model="email" required>
+            <input class="input100" type="text" name="address" placeholder="Endereço" v-model="address" required>
             <span class="focus-input100"></span>
             <span class="symbol-input100">
               <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -28,7 +31,32 @@
           </div>
 
           <div class="wrap-input100 validate-input">
-            <input class="input100" type="text" name="subject" placeholder="Subject" v-model="subject" required>
+            <input class="input100" type="text" name="login" placeholder="Login" v-model="login" required>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+              <i class="fa fa-user" aria-hidden="true"></i>
+            </span>
+          </div>
+
+           <div class="wrap-input100 validate-input">
+            <input class="input100" type="text" name="password" placeholder="Senha" v-model="password" required>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+              <i class="fa fa-lock" aria-hidden="true"></i>
+            </span>
+          </div>
+          <br>
+          <span class="title_section">A/C do Dep. T.I</span>
+          <div class="wrap-input100 validate-input">
+            <input class="input100" type="text" name="v_banda" placeholder="Velocidade de Banda" v-model="banda" required>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </span>
+          </div>
+
+           <div class="wrap-input100 validate-input">
+            <input class="input100" type="text" name="ip" placeholder="IP" v-model="ip" required>
             <span class="focus-input100"></span>
             <span class="symbol-input100">
               <i class="fa fa-pencil" aria-hidden="true"></i>
@@ -36,19 +64,30 @@
           </div>
 
           <div class="wrap-input100 validate-input">
-            <textarea class="input100" name="message" placeholder="Message" v-model="message" required></textarea>
+            <input class="input100" type="text" name="gateway" placeholder="Gateway" v-model="gateway" required>
             <span class="focus-input100"></span>
+            <span class="symbol-input100">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </span>
+          </div>
+
+          <div class="wrap-input100 validate-input">
+            <input class="input100" type="text" name="dns" placeholder="DNS" v-model="dns" required>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </span>
           </div>
 
           <div class="container-contact100-form-btn">
             <button class="contact100-form-btn">
-              Send
+              ENVIAR
             </button>
           </div>
 
           <div class="container-contact100-form-btn">
             <button class="contact100-form-btn" type="button" @click="showConfig = true">
-              Config SMTP
+              CONFIG SMTP
             </button>
           </div>
         </form>
@@ -71,15 +110,19 @@ const { ipcRenderer } = window.require('electron')
 })
 export default class Home extends Vue {
   name = '';
-  email = '';
-  subject = '';
-  message = '';
+  address = ''
+  login = '';
+  password = '';
+  banda = '';
+  ip = '';
+  gateway = '';
+  dns = '';
   showConfig = false
 
   async send () {
     await swal({
-      title: 'Sending...',
-      text: 'Please wait',
+      title: 'Enviando...',
+      text: 'Aguarde',
       buttons: {
         cancel: false,
         confirm: false
@@ -90,17 +133,22 @@ export default class Home extends Vue {
 
     const response = ipcRenderer.sendSync('sendEmail', {
       name: this.name,
-      email: this.email,
-      subject: this.subject,
-      message: this.message
+      address: this.address,
+      login: this.login,
+      password: this.password,
+      banda: this.banda,
+      ip: this.ip,
+      gateway: this.gateway,
+      dns: this.dns
+
     })
 
     if (response === 'missing_transport') {
       swal('Oops!', 'The SMTP configs were not inserted.', 'error')
     } else if (response === 'success') {
-      swal('Success!', 'Email sent.', 'success')
+      swal('Successo!', 'Email enviado.', 'success')
     } else {
-      swal('Oops!', 'It was not possible to send the email.', 'error')
+      swal('Erro!', 'Não foi possível enviar.', 'error')
     }
   }
 }
