@@ -20,6 +20,14 @@
               <i class="fa fa-user" aria-hidden="true"></i>
             </span>
           </div>
+
+           <div class="wrap-input100 validate-input">
+            <input class="input100" type="text" name="email" placeholder="E-mail Cliente" v-model="email" required>
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+              <i class="fa fa-user" aria-hidden="true"></i>
+            </span>
+          </div>
           <br>
           <span class="title_section">Central do Assinante</span>
           <div class="wrap-input100 validate-input">
@@ -110,6 +118,7 @@ const { ipcRenderer } = window.require('electron')
 })
 export default class Home extends Vue {
   name = '';
+  email = '';
   address = ''
   login = '';
   password = '';
@@ -120,7 +129,7 @@ export default class Home extends Vue {
   showConfig = false
 
   async send () {
-    await swal({
+    swal({
       title: 'Enviando...',
       text: 'Aguarde',
       buttons: {
