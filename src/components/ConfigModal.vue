@@ -65,8 +65,10 @@
           </span>
         </div>
 
-        <label for="secure">Secure?</label><br>
-        <input type="checkbox" id="secure" name="secure" v-model="secure">
+        <div class="container_secure" style="display: flex; margin-left: 10px;">
+          <label for="secure">Secure?</label><br>
+          <input type="checkbox" id="secure" name="secure" v-model="secure" style="height: 20px;">
+        </div>
 
         <div class="container-contact100-form-btn">
           <button class="contact100-form-btn">Salvar</button>
