@@ -142,6 +142,8 @@ export default class Home extends Vue {
 
     const response = ipcRenderer.sendSync('sendEmail', {
       name: this.name,
+      email: this.email,
+      subject: 'Seja Bem Vindo',
       address: this.address,
       login: this.login,
       password: this.password,
