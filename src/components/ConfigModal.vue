@@ -65,6 +65,9 @@
           </span>
         </div>
 
+        <label for="secure">Secure?</label><br>
+        <input type="checkbox" id="secure" name="secure" v-model="secure">
+
         <div class="container-contact100-form-btn">
           <button class="contact100-form-btn">Salvar</button>
         </div>
@@ -87,6 +90,7 @@ const { ipcRenderer } = window.require('electron')
 export default class ConfigModal extends Vue {
   host = '';
   port = '';
+  secure = false;
   user = '';
   pass = '';
   visible!: boolean;
@@ -105,6 +109,7 @@ export default class ConfigModal extends Vue {
     ipcRenderer.sendSync('saveSMTP', {
       host: this.host,
       port,
+      secure: this.secure,
       auth: {
         user: this.user,
         pass: this.pass
@@ -118,6 +123,7 @@ export default class ConfigModal extends Vue {
     const transportSettings = ipcRenderer.sendSync('getSMTP')
     this.host = transportSettings.host
     this.port = transportSettings.port
+    this.secure = transportSettings.secure
     this.user = transportSettings.auth.user
     this.pass = transportSettings.auth.pass
   }

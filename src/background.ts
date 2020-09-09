@@ -22,6 +22,7 @@ interface WindowBounds {
 interface TransportSettings {
   host: string | null;
   port: number | null;
+  secure: boolean | null;
   auth: {
     user: string | null;
     pass: string | null;
@@ -51,6 +52,7 @@ const store = new Store({
     transport: {
       host: null,
       port: null,
+      secure: null,
       auth: {
         user: null,
         pass: null
@@ -156,16 +158,16 @@ if (isDevelopment) {
 
 // Receive recipient data from the renderer
 ipcMain.handle('sendEmail', async (_, arg: SendMailDto) => {
-  const { host, port, auth } = store.get('transport') as TransportSettings;
+  const { host, port, secure, auth } = store.get('transport') as TransportSettings;
 
-  if (!host || !port || !auth.user || !auth.pass) {
+  if (!host || !port || secure === null || !auth.user || !auth.pass) {
     return 'missing_transport'
   }
 
   const transporter = createTransport({
     host,
     port,
-    secure: false,
+    secure,
     auth: {
       user: auth.user,
       pass: auth.pass
