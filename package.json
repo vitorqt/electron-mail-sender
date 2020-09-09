@@ -1,5 +1,5 @@
 {
-  "name": "mail-sender",
+  "name": "global-mail-sender",
   "description": "A app to send emails",
   "author": "Lucas Godoy",
   "version": "1.0.0",
