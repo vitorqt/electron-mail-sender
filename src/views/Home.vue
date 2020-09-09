@@ -140,25 +140,28 @@ export default class Home extends Vue {
       closeOnEsc: false
     })
 
-    const response = ipcRenderer.sendSync('sendEmail', {
-      name: this.name,
-      email: this.email,
-      subject: 'Seja Bem Vindo',
-      address: this.address,
-      login: this.login,
-      password: this.password,
-      banda: this.banda,
-      ip: this.ip,
-      gateway: this.gateway,
-      dns: this.dns
+    try {
+      const response = await ipcRenderer.invoke('sendEmail', {
+        name: this.name,
+        email: this.email,
+        subject: 'Seja Bem Vindo',
+        address: this.address,
+        login: this.login,
+        password: this.password,
+        banda: this.banda,
+        ip: this.ip,
+        gateway: this.gateway,
+        dns: this.dns
+      })
 
-    })
-
-    if (response === 'missing_transport') {
-      swal('Erro!', 'As configurações SMTP não foram inseridas.', 'error')
-    } else if (response === 'success') {
-      swal('Successo!', 'Email enviado.', 'success')
-    } else {
+      if (response === 'missing_transport') {
+        swal('Erro!', 'As configurações SMTP não foram inseridas.', 'error')
+      } else if (response === 'success') {
+        swal('Successo!', 'Email enviado.', 'success')
+      } else {
+        swal('Erro!', 'Não foi possível enviar.', 'error')
+      }
+    } catch (err) {
       swal('Erro!', 'Não foi possível enviar.', 'error')
     }
   }

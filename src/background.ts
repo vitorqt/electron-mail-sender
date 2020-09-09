@@ -155,12 +155,11 @@ if (isDevelopment) {
 }
 
 // Receive recipient data from the renderer
-ipcMain.on('sendEmail', async (event, arg: SendMailDto) => {
+ipcMain.handle('sendEmail', async (_, arg: SendMailDto) => {
   const { host, port, auth } = store.get('transport') as TransportSettings;
 
   if (!host || !port || !auth.user || !auth.pass) {
-    event.returnValue = 'missing_transport'
-    return
+    return 'missing_transport'
   }
 
   const transporter = createTransport({
@@ -185,10 +184,9 @@ ipcMain.on('sendEmail', async (event, arg: SendMailDto) => {
   try {
     await transporter.sendMail(options)
   } catch (err) {
-    event.returnValue = 'fail'
-    return
+    return 'fail'
   }
-  event.returnValue = 'success'
+  return 'success'
 })
 
 // Receive SMTP config
