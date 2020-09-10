@@ -144,7 +144,7 @@ export default class Home extends Vue {
       const response = await ipcRenderer.invoke('sendEmail', {
         name: this.name,
         email: this.email,
-        subject: 'Seja Bem Vindo',
+        subject: 'SEJA BEM VINDO (A)',
         address: this.address,
         login: this.login,
         password: this.password,
