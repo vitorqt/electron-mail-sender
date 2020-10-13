@@ -46,13 +46,6 @@
             </span>
           </div>
 
-           <div class="wrap-input100 validate-input">
-            <input class="input100" type="text" name="password" placeholder="Senha" v-model="password" required>
-            <span class="focus-input100"></span>
-            <span class="symbol-input100">
-              <i class="fa fa-lock" aria-hidden="true"></i>
-            </span>
-          </div>
           <br>
           <span class="title_section">A/C do Dep. T.I</span>
           <div class="wrap-input100 validate-input">
